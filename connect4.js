@@ -59,11 +59,7 @@ function findSpotForCol(x) {
   for (let y = HEIGHT - 1; y >= 0; y--) {
     let check = (document.getElementById(`${y}-${x}`));
     if (!check.hasChildNodes()){
-      let check1 = document.createElement('div');
-      check1.classList.add("piece", `p${currPlayer}`);
-      check.append(check1);
-      board[y][x] = currPlayer;
-      return
+      return y
     }
   };
 }
@@ -72,12 +68,18 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  let check = (document.getElementById(`${y}-${x}`));
+  let check1 = document.createElement('div');
+  check1.classList.add("piece", `p${currPlayer}`);
+  check.append(check1);
+  board[y][x] = currPlayer;
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
   // TODO: pop up alert message
+  setTimeout(() => alert(msg), 100);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -103,11 +105,12 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if (board.every(x => x === 1 || 2)) {
+  if (board.every((i => i.every(j => (j === !undefined))))) {
     return endGame("Draw!");
   }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer = (currPlayer === 1) ? 2: 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
