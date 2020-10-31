@@ -62,6 +62,7 @@ function findSpotForCol(x) {
       let check1 = document.createElement('div');
       check1.classList.add("piece", `p${currPlayer}`);
       check.append(check1);
+      board[y][x] = currPlayer;
       return
     }
   };
