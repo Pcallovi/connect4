@@ -56,7 +56,15 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    let check = (document.getElementById(`${y}-${x}`));
+    if (!check.hasChildNodes()){
+      let check1 = document.createElement('div');
+      check1.classList.add("piece", `p${currPlayer}`);
+      check.append(check1);
+      return
+    }
+  };
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
