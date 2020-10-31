@@ -103,7 +103,9 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-
+  if (board.every(x => x === 1 || 2)) {
+    return endGame("Draw!");
+  }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
 }
