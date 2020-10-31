@@ -131,7 +131,13 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
+  // TODO:  
+  //for loop runs through nested arrays, second runs within each array.
+  //horiz creates array of current y, x and 3 items to right
+  //ver creates array of current y, x and 3 items above in other nested array at same index
+  //diag dr creates array of current y,x and 3 items 1 to right and 1 above previous 
+  // diag dl creates array of current y,x and 3 items 1 to left and 1 above previous
+  //if checks if all are with in the boundaries of the board and if they belong to currPlayer, it they do they return true
 
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
