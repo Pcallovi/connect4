@@ -10,7 +10,7 @@ let HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
-
+const resetButton = document.querySelector(".resetButton");
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
@@ -59,9 +59,9 @@ function findSpotForCol(x) {
   for (let y = HEIGHT - 1; y >= 0; y--) {
     let check = (document.getElementById(`${y}-${x}`));
     if (!check.hasChildNodes()){
-      return y
+      return y;
     }
-  };
+  }; return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -79,7 +79,9 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  let top = document.querySelector("#column-top");
   setTimeout(() => alert(msg), 100);
+  top.removeEventListener("click", handleClick());
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -105,13 +107,17 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if (board.every((i => i.every(j => (j === !undefined))))) {
+  if (board.every(i => i.every(j => !j))) {
     return endGame("Draw!");
   }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   currPlayer = (currPlayer === 1) ? 2: 1;
+  document.querySelector("h3").innerHTML = `Player ${currPlayer}'s Turn`;
 }
+
+
+
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
 
@@ -153,5 +159,25 @@ function checkForWin() {
   }
 }
 
+// Removes the pieces div and clears the board
+function remove() {
+  const pieces = document.querySelectorAll(".piece");
+  for (let i= 0; i < pieces.length; i++) {
+    pieces[i].remove();
+  }
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
+      if (board[y][x] === 1 || 2) {
+        board[y][x] = undefined;
+      }
+    }
+  }
+}
+// adds event listener to reset buttona and executes remove function
+function reset() {
+  resetButton.addEventListener("click", remove)
+}
+
 makeBoard();
 makeHtmlBoard();
+reset();
